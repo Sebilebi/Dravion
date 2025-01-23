@@ -1,6 +1,4 @@
 ﻿using Dravion.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.JSInterop;
 
 namespace Dravion.Components.Pages
 {
