@@ -1,7 +1,105 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Dravion</PageTitle>
 
-<h1>Hello, world!</h1>
+<header class="header">
+    <h1 style="text-align: left; padding-left: 20px;">Tenova</h1>
+</header>
+<div class="container">
+    <div class="main-content">
+        <div id="loading-indicator" class="loading">Loading content...</div>
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="search" id="search-input" placeholder="Search for Minecraft projects...">
+            </div>
+        </div>
 
-Welcome to your new app.
+        <div class="filter-section">
+            <select id="content-type">
+                <option value="mods">Mods</option>
+                <option value="plugins">Plugins</option>
+                <option value="shaders">Shaders</option>
+                <option value="resourcepacks">Resource Packs</option>
+                <option value="worlds">Worlds</option>
+            </select>
+            <select>
+                <option>Featured</option>
+            </select>
+        </div>
+
+        <div class="mod-list" id="content-list">
+            <!-- El contenido se insertará dinámicamente aquí -->
+        </div>
+
+        <div id="pagination" class="pagination">
+            <!-- La paginación se insertará dinámicamente aquí -->
+        </div>
+        <div class="bottom-spacing"></div>
+    </div>
+
+    <div class="separator" id="separator"></div>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-selectors">
+                <div class="custom-select" style="flex: 2;">
+                    <div class="custom-select-header" id="item-lists-header">
+                        <span>Select Item List</span>
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                    <div class="custom-select-options" id="item-lists-options">
+                        <!-- Las listas de artículos se insertarán dinámicamente aquí -->
+                    </div>
+                </div>
+                <div class="dropdown" style="flex: 1;">
+                    <select id="minecraft-versions">
+                        <option value="">Select Version</option>
+                        <!-- Las versiones de Minecraft se insertarán dinámicamente aquí -->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-content">
+            <div class="stats">
+                <button class="stat-item" data-type="mods" data-tooltip="Mods">
+                    <i data-lucide="box"></i>
+                    <span id="mods-count">0</span>
+                </button>
+                <button class="stat-item" data-type="plugins" data-tooltip="Plugins">
+                    <i data-lucide="plug"></i>
+                    <span id="plugins-count">0</span>
+                </button>
+                <button class="stat-item" data-type="shaders" data-tooltip="Shaders">
+                    <i data-lucide="palette"></i>
+                    <span id="shaders-count">0</span>
+                </button>
+                <button class="stat-item" data-type="resourcepacks" data-tooltip="Resource Packs">
+                    <i data-lucide="image"></i>
+                    <span id="resourcepacks-count">0</span>
+                </button>
+                <button class="stat-item" data-type="worlds" data-tooltip="Worlds">
+                    <i data-lucide="globe"></i>
+                    <span id="worlds-count">0</span>
+                </button>
+            </div>
+            <div id="selected-items">
+                <!-- Los elementos seleccionados se insertarán dinámicamente aquí -->
+            </div>
+            <div class="action-selector">
+                <label for="item-selector">Seleccionar items para acción:</label>
+                <select id="item-selector">
+                    <option value="all">Todos los items</option>
+                    <option value="mods">Mods</option>
+                    <option value="plugins">Plugins</option>
+                    <option value="shaders">Shaders</option>
+                    <option value="resourcepacks">Resource Packs</option>
+                    <option value="worlds">Worlds</option>
+                </select>
+            </div>
+            <div class="action-buttons">
+                <button class="action-button" id="download-button">Descargar</button>
+                <button class="action-button" id="export-button">Exportar</button>
+            </div>
+        </div>
+    </div>
+</div>
