@@ -1,0 +1,49 @@
+﻿@rendermode InteractiveServer
+@using System.Collections.Generic
+@using Models
+
+<div class="mod-card">
+    <div class="mod-image" style="background-image: url('@(Item.ThumbnailUrl ?? "/placeholder.svg")'); background-size: cover;"></div>
+    <div class="mod-info">
+        <h3 class="mod-title">@Item.Title</h3>
+        <div class="mod-meta">
+            <span class="mod-versions">@((MarkupString)GetVersionsDisplay(Item.Versions))</span>
+        </div>
+    </div>
+    @if (IsInSelectedList)
+    {
+        <button class="button remove-button" >
+            Remove
+        </button>
+    }
+    else
+    {
+        <button class="button @(IsAdded ? "add-button added" : IsBlocked ? "add-button blocked" : "add-button")" disabled="@IsBlocked">
+            @(IsAdded ? "Added" : IsBlocked ? "Incompatible" : "Add")
+        </button>
+    }
+</div>
+
+@code {
+    [Parameter] public MinecraftContent Item { get; set; }
+    [Parameter] public bool IsAdded { get; set; }
+    [Parameter] public bool IsBlocked { get; set; }
+    [Parameter] public bool IsInSelectedList { get; set; }
+    [Parameter] public EventCallback<MinecraftContent> OnToggle { get; set; }
+    [Parameter] public EventCallback<MinecraftContent> OnRemove { get; set; }
+
+    private string GetVersionsDisplay(List<string> versions)
+    {
+        var sortedVersions = versions.OrderByDescending(v => v).ToList();
+        var recentVersions = sortedVersions.Take(4);
+        var remainingVersions = sortedVersions.Skip(4).ToList();
+
+        var display = string.Join(", ", recentVersions);
+        if (remainingVersions.Any())
+        {
+            display += $" <span class=\"more-versions\" title=\"{string.Join(", ", remainingVersions)}\">+{remainingVersions.Count} more</span>";
+        }
+
+        return display;
+    }
+}

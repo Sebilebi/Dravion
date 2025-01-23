@@ -1,4 +1,7 @@
 ﻿@page "/"
+@rendermode InteractiveServer
+@using Dravion.Components.Widget
+@using Models
 
 <PageTitle>Dravion</PageTitle>
 
@@ -29,6 +32,15 @@
 
         <div class="mod-list" id="content-list">
             <!-- El contenido se insertará dinámicamente aquí -->
+            @foreach (var item in HardcodedData.AllItems)
+            {
+
+                <ItemCard 
+                    Item="item"
+                    IsAdded="IsItemAdded(item)"
+                    IsBlocked="IsItemBlocked(item)"
+                    IsInSelectedList="false" />
+            }
         </div>
 
         <div id="pagination" class="pagination">
@@ -49,6 +61,7 @@
                     </div>
                     <div class="custom-select-options" id="item-lists-options">
                         <!-- Las listas de artículos se insertarán dinámicamente aquí -->
+         
                     </div>
                 </div>
                 <div class="dropdown" style="flex: 1;">
