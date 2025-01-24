@@ -1,4 +1,6 @@
-﻿namespace Dravion.Models
+﻿using static Dravion.Models.MinecraftContent;
+
+namespace Dravion.Models
 {
     public class HardcodedData
     {
@@ -13,7 +15,7 @@
                 Downloads = "100000000",
                 Summary = "OptiFine is a Minecraft optimization mod.",
                 ThumbnailUrl = "https://example.com/optifine.png",
-                Type = "mods"
+                Type = ItemType.Mods
             },
             new MinecraftContent
             {
@@ -24,7 +26,7 @@
                 Downloads = "50000000",
                 Summary = "Adds new biomes to Minecraft.",
                 ThumbnailUrl = "https://example.com/biomesoplenty.png",
-                Type = "mods"
+                Type = ItemType.Mods
             },
             new MinecraftContent
             {
@@ -35,7 +37,7 @@
                 Downloads = "75000000",
                 Summary = "Real-time mapping in-game or in a web browser as you explore.",
                 ThumbnailUrl = "https://example.com/journeymap.png",
-                Type = "mods"
+                Type = ItemType.Mods
             },
             new MinecraftContent
             {
@@ -46,7 +48,7 @@
                 Downloads = "80000000",
                 Summary = "Essential commands and features for Bukkit servers.",
                 ThumbnailUrl = "https://example.com/essentials.png",
-                Type = "plugins"
+                Type = ItemType.Plugins
             },
             new MinecraftContent
             {
@@ -57,7 +59,7 @@
                 Downloads = "70000000",
                 Summary = "In-game map editor for Bukkit servers.",
                 ThumbnailUrl = "https://example.com/worldedit.png",
-                Type = "plugins"
+                Type = ItemType.Plugins
             },
             new MinecraftContent
             {
@@ -68,7 +70,7 @@
                 Downloads = "30000000",
                 Summary = "Adds beautiful shaders to Minecraft.",
                 ThumbnailUrl = "https://example.com/seus.png",
-                Type = "shaders"
+                Type = ItemType.Shaders
             },
             new MinecraftContent
             {
@@ -79,7 +81,7 @@
                 Downloads = "25000000",
                 Summary = "A beautiful, customizable shader pack for Minecraft.",
                 ThumbnailUrl = "https://example.com/bsl.png",
-                Type = "shaders"
+                Type = ItemType.Shaders
             },
             new MinecraftContent
             {
@@ -90,7 +92,7 @@
                 Downloads = "60000000",
                 Summary = "The original Faithful 32x32 resource pack.",
                 ThumbnailUrl = "https://example.com/faithful.png",
-                Type = "resourcepacks"
+                Type = ItemType.ResourcePacks
             },
             new MinecraftContent
             {
@@ -101,7 +103,7 @@
                 Downloads = "40000000",
                 Summary = "A modern, high-definition resource pack for Minecraft.",
                 ThumbnailUrl = "https://example.com/modernhd.png",
-                Type = "resourcepacks"
+                Type = ItemType.ResourcePacks
             },
             new MinecraftContent
             {
@@ -112,7 +114,7 @@
                 Downloads = "20000000",
                 Summary = "The classic Skyblock challenge map.",
                 ThumbnailUrl = "https://example.com/skyblock.png",
-                Type = "worlds"
+                Type = ItemType.Worlds
             },
             new MinecraftContent
             {
@@ -123,7 +125,7 @@
                 Downloads = "15000000",
                 Summary = "A massive, detailed city world for exploration.",
                 ThumbnailUrl = "https://example.com/newisle.png",
-                Type = "worlds"
+                Type = ItemType.Worlds
             }
         };
 

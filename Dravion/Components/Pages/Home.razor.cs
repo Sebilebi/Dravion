@@ -1,4 +1,5 @@
 ﻿using Dravion.Models;
+using static Dravion.Models.MinecraftContent;
 
 namespace Dravion.Components.Pages
 {
@@ -82,6 +83,20 @@ namespace Dravion.Components.Pages
         {
             SelectedList = list; // Seleccionar la lista
             showItemListsDropdown = false; // Ocultar el dropdown después de seleccionar
+        }
+
+        private int GetItemCount(ItemType type)
+        {
+            if (SelectedList == null)
+            {
+                return 0;
+            }
+
+            // Obtiene la clave correspondiente al tipo de ítem
+            var key = type.ToString().ToLower();
+
+            // Retorna la cantidad de ítems de ese tipo en la lista seleccionada
+            return SelectedList.Items.ContainsKey(key) ? SelectedList.Items[key].Count : 0;
         }
     }
 }

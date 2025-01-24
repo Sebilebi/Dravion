@@ -9,6 +9,15 @@
         public string Downloads { get; set; }
         public string Summary { get; set; }
         public string ThumbnailUrl { get; set; }
-        public string Type { get; set; }
+        public ItemType Type { get; set; }
+
+        public enum ItemType
+        {
+            Mods,
+            Plugins,
+            Shaders,
+            ResourcePacks,
+            Worlds
+        }
     }
 }
