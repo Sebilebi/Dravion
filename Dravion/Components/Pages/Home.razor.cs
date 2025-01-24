@@ -20,6 +20,12 @@ namespace Dravion.Components.Pages
             {
                 isLoading = false;
             }
+
+            // Selecciona la primera lista por defecto
+            if (ItemLists.Any())
+            {
+                SelectedList = ItemLists[0];
+            }
         }
 
         private List<MinecraftContent> FilterItems(string searchTerm)
@@ -43,6 +49,27 @@ namespace Dravion.Components.Pages
         private bool IsItemBlocked(MinecraftContent item)
         {
             return !string.IsNullOrEmpty(SelectedVersion) && !item.Versions.Contains(SelectedVersion);
+        }
+
+        private void ToggleItem(MinecraftContent item)
+        {
+            if (SelectedList == null)
+            {
+                return;
+            }
+
+            var itemList = SelectedList.Items[SelectedContentType];
+
+            if (itemList.Any(i => i.Id == item.Id))
+            {
+                // Si el elemento ya está en la lista, lo eliminamos
+                itemList.RemoveAll(i => i.Id == item.Id);
+            }
+            else
+            {
+                // Si el elemento no está en la lista, lo añadimos
+                itemList.Add(item);
+            }
         }
     }
 }

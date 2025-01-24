@@ -54,7 +54,9 @@
                     <ItemCard Item="item"
                               IsAdded="IsItemAdded(item)"
                               IsBlocked="IsItemBlocked(item)"
-                              IsInSelectedList="false" />
+                              IsInSelectedList="false"
+                              OnToggle="ToggleItem"
+                              OnRemove="ToggleItem" />
                 }
             }
         </div>
@@ -111,7 +113,18 @@
                 </button>
             </div>
             <div id="selected-items">
-                <!-- Los elementos seleccionados se insertarán dinámicamente aquí -->
+                @if (SelectedList != null)
+                {
+                    @foreach (var item in SelectedList.Items[SelectedContentType])
+                    {
+                        <ItemCard Item="item"
+                                  IsAdded="true"
+                                  IsBlocked="IsItemBlocked(item)"
+                                  IsInSelectedList="true"
+                                  OnToggle="ToggleItem"
+                                  OnRemove="ToggleItem" />
+                    }
+                }
             </div>
             <div class="action-selector">
                 <label for="item-selector">Seleccionar items para acción:</label>

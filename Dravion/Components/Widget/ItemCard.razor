@@ -12,13 +12,13 @@
     </div>
     @if (IsInSelectedList)
     {
-        <button class="button remove-button" >
+        <button class="button remove-button" @onclick="() => OnRemove.InvokeAsync(Item)">
             Remove
         </button>
     }
     else
     {
-        <button class="button @(IsAdded ? "add-button added" : IsBlocked ? "add-button blocked" : "add-button")" disabled="@IsBlocked">
+        <button class="button @(IsAdded ? "add-button added" : IsBlocked ? "add-button blocked" : "add-button")" disabled="@IsBlocked" @onclick="() => OnToggle.InvokeAsync(Item)">
             @(IsAdded ? "Added" : IsBlocked ? "Incompatible" : "Add")
         </button>
     }
