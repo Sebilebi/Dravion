@@ -1,4 +1,5 @@
 ﻿using Dravion.Models;
+using Microsoft.AspNetCore.Components;
 using static Dravion.Models.MinecraftContent;
 
 namespace Dravion.Components.Pages
@@ -30,15 +31,18 @@ namespace Dravion.Components.Pages
             }
         }
 
-        private List<MinecraftContent> FilterItems(string searchTerm)
+        private List<MinecraftContent> FilterItemsByType(string searchTerm, string contentType)
         {
+            var filteredItems = HardcodedData.AllItems
+                .Where(item => item.Type.ToString().ToLower() == contentType)
+                .ToList();
+
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
-                return HardcodedData.AllItems; // Si no hay término de búsqueda, devuelve todos los elementos
+                return filteredItems;
             }
 
-            // Filtra los elementos que coincidan con el término de búsqueda (ignorando mayúsculas/minúsculas)
-            return HardcodedData.AllItems
+            return filteredItems
                 .Where(item => item.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         }
@@ -106,6 +110,12 @@ namespace Dravion.Components.Pages
         {
             // Cambia el tipo de contenido seleccionado
             SelectedContentType = type.ToString().ToLower();
+        }
+
+        private void OnContentTypeChanged(ChangeEventArgs e)
+        {
+            // Actualiza el tipo de contenido seleccionado
+            SelectedContentType = e.Value.ToString();
         }
     }
 }

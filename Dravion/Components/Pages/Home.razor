@@ -18,7 +18,7 @@
         </div>
 
         <div class="filter-section">
-            <select id="content-type">
+            <select id="content-type" @onchange="OnContentTypeChanged">
                 <option value="mods">Mods</option>
                 <option value="plugins">Plugins</option>
                 <option value="shaders">Shaders</option>
@@ -49,8 +49,8 @@
             }
             else
             {
-                <!-- Muestra los elementos filtrados -->
-                @foreach (var item in FilterItems(searchTerm))
+                <!-- Muestra los elementos filtrados por tipo -->
+                @foreach (var item in FilterItemsByType(searchTerm, SelectedContentType))
                 {
                     <ItemCard Item="item"
                               IsAdded="IsItemAdded(item)"
