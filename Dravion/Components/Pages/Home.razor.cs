@@ -10,6 +10,7 @@ namespace Dravion.Components.Pages
         private string SelectedVersion { get; set; } = "";
         private bool isLoading = true; // Estado de carga
         private string searchTerm = string.Empty; // Almacena el término de búsqueda
+        private bool showItemListsDropdown = false; // Controla la visibilidad del dropdown de las listas de items
 
         protected override async Task OnInitializedAsync()
         {
@@ -70,6 +71,17 @@ namespace Dravion.Components.Pages
                 // Si el elemento no está en la lista, lo añadimos
                 itemList.Add(item);
             }
+        }
+
+        private void ToggleItemListsDropdown()
+        {
+            showItemListsDropdown = !showItemListsDropdown; // Alternar la visibilidad del dropdown
+        }
+
+        private void SelectItemList(ItemList list)
+        {
+            SelectedList = list; // Seleccionar la lista
+            showItemListsDropdown = false; // Ocultar el dropdown después de seleccionar
         }
     }
 }

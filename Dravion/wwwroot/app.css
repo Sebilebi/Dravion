@@ -602,15 +602,6 @@ select {
         visibility: visible;
     }
 
-.loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    font-size: 18px;
-    color: var(--text-secondary);
-}
-
 .pagination {
     display: flex;
     justify-content: center;
