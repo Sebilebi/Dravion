@@ -31,15 +31,32 @@
         </div>
 
         <div class="mod-list" id="content-list">
-            <!-- El contenido se insertará dinámicamente aquí -->
-            @foreach (var item in HardcodedData.AllItems)
+            @if (ItemLists == null || !ItemLists.Any())
             {
-
-                <ItemCard 
-                    Item="item"
-                    IsAdded="IsItemAdded(item)"
-                    IsBlocked="IsItemBlocked(item)"
-                    IsInSelectedList="false" />
+                if (isLoading)
+                {
+                    <!-- Muestra skeleton mientras se carga -->
+                    for (int i = 0; i < 5; i++)
+                    {
+                        <div class="mod-card skeleton"></div>
+                    }
+                }
+                else
+                {
+                    <!-- Muestra un mensaje si no hay elementos -->
+                    <div class="empty-state">No hay elementos disponibles.</div>
+                }
+            }
+            else
+            {
+                <!-- Muestra los elementos si hay datos -->
+                @foreach (var item in HardcodedData.AllItems)
+                {
+                    <ItemCard Item="item"
+                              IsAdded="IsItemAdded(item)"
+                              IsBlocked="IsItemBlocked(item)"
+                              IsInSelectedList="false" />
+                }
             }
         </div>
 
@@ -61,7 +78,6 @@
                     </div>
                     <div class="custom-select-options" id="item-lists-options">
                         <!-- Las listas de artículos se insertarán dinámicamente aquí -->
-         
                     </div>
                 </div>
                 <div class="dropdown" style="flex: 1;">

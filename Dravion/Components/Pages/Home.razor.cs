@@ -5,17 +5,19 @@ namespace Dravion.Components.Pages
     public partial class Home
     {
         private ItemList SelectedList { get; set; }
-        private List<ItemList> ItemLists { get; set; } = new List<ItemList>();
+        public List<ItemList> ItemLists { get; set; } = HardcodedData.ItemLists; // Cargar datos hardcodeados en lugar de LocalStorage
         private string SelectedContentType { get; set; } = "mods";
         private string SelectedVersion { get; set; } = "";
+        private bool isLoading = true; // Estado de carga
 
         protected override async Task OnInitializedAsync()
         {
-            // Cargar datos hardcodeados en lugar de LocalStorage
-            ItemLists = HardcodedData.ItemLists;
-            if (ItemLists.Count > 0)
+            // Simula una carga de datos
+            await Task.Delay(2000); // 2 segundos
+
+            if (ItemLists == null || !ItemLists.Any())
             {
-                SelectedList = ItemLists[0];
+                isLoading = false;
             }
         }
 
