@@ -45,7 +45,10 @@ namespace Dravion.Components.Pages
 
         private bool IsItemAdded(MinecraftContent item)
         {
-            return SelectedList?.Items[SelectedContentType].Any(i => i.Id == item.Id) ?? false;
+            if (SelectedList == null) return false;
+
+            // Verifica si el ítem está en cualquier tipo de la lista seleccionada
+            return SelectedList.Items.Values.Any(items => items.Any(i => i.Id == item.Id));
         }
 
         private bool IsItemBlocked(MinecraftContent item)
