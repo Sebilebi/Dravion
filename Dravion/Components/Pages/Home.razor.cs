@@ -7,7 +7,7 @@ namespace Dravion.Components.Pages
     {
         private ItemList SelectedList { get; set; }
         public List<ItemList> ItemLists { get; set; } = HardcodedData.ItemLists; // Cargar datos hardcodeados en lugar de LocalStorage
-        private string SelectedContentType { get; set; } = "mods";
+        private string SelectedContentType { get; set; } = "mods"; // Tipo de item seleccionado
         private string SelectedVersion { get; set; } = "";
         private bool isLoading = true; // Estado de carga
         private string searchTerm = string.Empty; // Almacena el término de búsqueda
@@ -97,6 +97,12 @@ namespace Dravion.Components.Pages
 
             // Retorna la cantidad de ítems de ese tipo en la lista seleccionada
             return SelectedList.Items.ContainsKey(key) ? SelectedList.Items[key].Count : 0;
+        }
+
+        private void SelectContentType(ItemType type)
+        {
+            // Cambia el tipo de contenido seleccionado
+            SelectedContentType = type.ToString().ToLower();
         }
     }
 }

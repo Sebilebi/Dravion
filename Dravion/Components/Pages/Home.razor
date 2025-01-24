@@ -97,41 +97,52 @@
         </div>
         <div class="sidebar-content">
             <div class="stats">
-                <button class="stat-item" data-type="mods" data-tooltip="Mods">
+                <button class="stat-item" data-type="mods" data-tooltip="Mods" @onclick="() => SelectContentType(ItemType.Mods)">
                     <i data-lucide="box"></i>
                     <span id="mods-count">@GetItemCount(ItemType.Mods)</span>
                 </button>
-                <button class="stat-item" data-type="plugins" data-tooltip="Plugins">
+                <button class="stat-item" data-type="plugins" data-tooltip="Plugins" @onclick="() => SelectContentType(ItemType.Plugins)">
                     <i data-lucide="plug"></i>
                     <span id="plugins-count">@GetItemCount(ItemType.Plugins)</span>
                 </button>
-                <button class="stat-item" data-type="shaders" data-tooltip="Shaders">
+                <button class="stat-item" data-type="shaders" data-tooltip="Shaders" @onclick="() => SelectContentType(ItemType.Shaders)">
                     <i data-lucide="palette"></i>
                     <span id="shaders-count">@GetItemCount(ItemType.Shaders)</span>
                 </button>
-                <button class="stat-item" data-type="resourcepacks" data-tooltip="Resource Packs">
+                <button class="stat-item" data-type="resourcepacks" data-tooltip="Resource Packs" @onclick="() => SelectContentType(ItemType.ResourcePacks)">
                     <i data-lucide="image"></i>
                     <span id="resourcepacks-count">@GetItemCount(ItemType.ResourcePacks)</span>
                 </button>
-                <button class="stat-item" data-type="worlds" data-tooltip="Worlds">
+                <button class="stat-item" data-type="worlds" data-tooltip="Worlds" @onclick="() => SelectContentType(ItemType.Worlds)">
                     <i data-lucide="globe"></i>
                     <span id="worlds-count">@GetItemCount(ItemType.Worlds)</span>
                 </button>
             </div>
-        <div id="selected-items">
-            @if (SelectedList != null)
-            {
-                @foreach (var item in SelectedList.Items[SelectedContentType])
+            <div id="selected-items">
+                @if (SelectedList != null && SelectedList.Items.ContainsKey(SelectedContentType))
                 {
-                    <ItemCard Item="item"
-                              IsAdded="true"
-                              IsBlocked="IsItemBlocked(item)"
-                              IsInSelectedList="true"
-                              OnToggle="ToggleItem"
-                              OnRemove="ToggleItem" />
+                    @if (SelectedList.Items[SelectedContentType].Any())
+                    {
+                        @foreach (var item in SelectedList.Items[SelectedContentType])
+                        {
+                            <ItemCard Item="item"
+                                      IsAdded="true"
+                                      IsBlocked="IsItemBlocked(item)"
+                                      IsInSelectedList="true"
+                                      OnToggle="ToggleItem"
+                                      OnRemove="ToggleItem" />
+                        }
+                    }
+                    else
+                    {
+                        <div class="empty-state">No hay elementos de este tipo en la lista seleccionada.</div>
+                    }
                 }
-            }
-        </div>
+                else
+                {
+                    <div class="empty-state">No hay elementos de este tipo en la lista seleccionada.</div>
+                }
+            </div>
             <div class="action-selector">
                 <label for="item-selector">Seleccionar items para acción:</label>
                 <select id="item-selector">
