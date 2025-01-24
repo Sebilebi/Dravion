@@ -9,6 +9,7 @@ namespace Dravion.Components.Pages
         private string SelectedContentType { get; set; } = "mods";
         private string SelectedVersion { get; set; } = "";
         private bool isLoading = true; // Estado de carga
+        private string searchTerm = string.Empty; // Almacena el término de búsqueda
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,6 +22,19 @@ namespace Dravion.Components.Pages
             }
         }
 
+        private List<MinecraftContent> FilterItems(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                return HardcodedData.AllItems; // Si no hay término de búsqueda, devuelve todos los elementos
+            }
+
+            // Filtra los elementos que coincidan con el término de búsqueda (ignorando mayúsculas/minúsculas)
+            return HardcodedData.AllItems
+                .Where(item => item.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
         private bool IsItemAdded(MinecraftContent item)
         {
             return SelectedList?.Items[SelectedContentType].Any(i => i.Id == item.Id) ?? false;
@@ -30,6 +44,5 @@ namespace Dravion.Components.Pages
         {
             return !string.IsNullOrEmpty(SelectedVersion) && !item.Versions.Contains(SelectedVersion);
         }
-
     }
 }

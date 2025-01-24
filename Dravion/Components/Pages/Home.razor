@@ -10,10 +10,9 @@
 </header>
 <div class="container">
     <div class="main-content">
-        <div id="loading-indicator" class="loading">Loading content...</div>
         <div class="search-section">
             <div class="search-bar">
-                <input type="search" id="search-input" placeholder="Search for Minecraft projects...">
+                <input type="search" id="search-input" placeholder="Search for Minecraft projects..." @bind="searchTerm" @bind:event="oninput" />
             </div>
         </div>
 
@@ -35,7 +34,7 @@
             {
                 if (isLoading)
                 {
-                    <!-- Muestra skeleton mientras se carga -->
+                    <!-- Muestra esqueletos mientras se carga -->
                     for (int i = 0; i < 5; i++)
                     {
                         <div class="mod-card skeleton"></div>
@@ -49,8 +48,8 @@
             }
             else
             {
-                <!-- Muestra los elementos si hay datos -->
-                @foreach (var item in HardcodedData.AllItems)
+                <!-- Muestra los elementos filtrados -->
+                @foreach (var item in FilterItems(searchTerm))
                 {
                     <ItemCard Item="item"
                               IsAdded="IsItemAdded(item)"
