@@ -8,7 +8,7 @@ namespace Dravion.Components.Pages
     {
         private ItemList SelectedList { get; set; }
         public List<ItemList> ItemLists { get; set; } = HardcodedData.ItemLists; // Cargar datos hardcodeados en lugar de LocalStorage
-        private string SelectedContentType { get; set; } = "mods"; // Tipo de item seleccionado
+        private ItemType SelectedContentType { get; set; } = ItemType.Mods; // Tipo de item seleccionado
         private string SelectedVersion { get; set; } = "";
         private bool isLoading = true; // Estado de carga
         private string searchTerm = string.Empty; // Almacena el término de búsqueda
@@ -31,10 +31,10 @@ namespace Dravion.Components.Pages
             }
         }
 
-        private List<MinecraftContent> FilterItemsByType(string searchTerm, string contentType)
+        private List<MinecraftContent> FilterItemsByType(string searchTerm, ItemType contentType)
         {
             var filteredItems = HardcodedData.AllItems
-                .Where(item => item.Type.ToString().ToLower() == contentType)
+                .Where(item => item.Type == contentType)
                 .ToList();
 
             if (string.IsNullOrWhiteSpace(searchTerm))
@@ -67,7 +67,7 @@ namespace Dravion.Components.Pages
                 return;
             }
 
-            var itemList = SelectedList.Items[SelectedContentType];
+            var itemList = SelectedList.Items[SelectedContentType.ToString().ToLower()];
 
             if (itemList.Any(i => i.Id == item.Id))
             {
@@ -109,13 +109,16 @@ namespace Dravion.Components.Pages
         private void SelectContentType(ItemType type)
         {
             // Cambia el tipo de contenido seleccionado
-            SelectedContentType = type.ToString().ToLower();
+            SelectedContentType = type;
         }
 
         private void OnContentTypeChanged(ChangeEventArgs e)
         {
             // Actualiza el tipo de contenido seleccionado
-            SelectedContentType = e.Value.ToString();
+            if (Enum.TryParse(e.Value.ToString(), true, out ItemType selectedType))
+            {
+                SelectedContentType = selectedType;
+            }
         }
     }
 }

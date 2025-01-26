@@ -19,11 +19,10 @@
 
         <div class="filter-section">
             <select id="content-type" @onchange="OnContentTypeChanged">
-                <option value="mods">Mods</option>
-                <option value="plugins">Plugins</option>
-                <option value="shaders">Shaders</option>
-                <option value="resourcepacks">Resource Packs</option>
-                <option value="worlds">Worlds</option>
+                @foreach (var type in Enum.GetValues(typeof(ItemType)))
+                {
+                    <option value="@type.ToString().ToLower()">@type</option>
+                }
             </select>
             <select>
                 <option>Featured</option>
@@ -119,11 +118,11 @@
                 </button>
             </div>
             <div id="selected-items">
-                @if (SelectedList != null && SelectedList.Items.ContainsKey(SelectedContentType))
+                @if (SelectedList != null && SelectedList.Items.ContainsKey(SelectedContentType.ToString().ToLower()))
                 {
-                    @if (SelectedList.Items[SelectedContentType].Any())
+                    @if (SelectedList.Items[SelectedContentType.ToString().ToLower()].Any())
                     {
-                        @foreach (var item in SelectedList.Items[SelectedContentType])
+                        @foreach (var item in SelectedList.Items[SelectedContentType.ToString().ToLower()])
                         {
                             <ItemCard Item="item"
                                       IsAdded="true"
@@ -147,11 +146,10 @@
                 <label for="item-selector">Seleccionar items para acción:</label>
                 <select id="item-selector">
                     <option value="all">Todos los items</option>
-                    <option value="mods">Mods</option>
-                    <option value="plugins">Plugins</option>
-                    <option value="shaders">Shaders</option>
-                    <option value="resourcepacks">Resource Packs</option>
-                    <option value="worlds">Worlds</option>
+                    @foreach (var type in Enum.GetValues(typeof(ItemType)))
+                    {
+                        <option value="@type.ToString().ToLower()">@type</option>
+                    }
                 </select>
             </div>
             <div class="action-buttons">
