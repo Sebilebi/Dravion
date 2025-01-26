@@ -9,6 +9,7 @@ namespace Dravion.Components.Pages
         private ItemList SelectedList { get; set; }
         public List<ItemList> ItemLists { get; set; } = HardcodedData.ItemLists; // Cargar datos hardcodeados en lugar de LocalStorage
         private ItemType SelectedContentType { get; set; } = ItemType.Mods; // Tipo de item seleccionado
+        private ItemType SelectedContentTypeForSelectedItems { get; set; } = ItemType.Mods; // Tipo de item seleccionado del selector
         private string SelectedVersion { get; set; } = "";
         private bool isLoading = true; // Estado de carga
         private string searchTerm = string.Empty; // Almacena el término de búsqueda
@@ -67,17 +68,23 @@ namespace Dravion.Components.Pages
                 return;
             }
 
-            var itemList = SelectedList.Items[SelectedContentType.ToString().ToLower()];
+            // Busca el item en cualquier tipo de contenido dentro de la lista seleccionada
+            var itemList = SelectedList.Items.Values.FirstOrDefault(items => items.Any(i => i.Id == item.Id));
 
-            if (itemList.Any(i => i.Id == item.Id))
+            if (itemList != null)
             {
-                // Si el elemento ya está en la lista, lo eliminamos
+                // Si el item ya está en la lista, lo eliminamos
                 itemList.RemoveAll(i => i.Id == item.Id);
             }
             else
             {
-                // Si el elemento no está en la lista, lo añadimos
-                itemList.Add(item);
+                // Si el item no está en la lista, lo añadimos al tipo de contenido correspondiente
+                var contentTypeKey = item.Type.ToString().ToLower();
+                if (!SelectedList.Items.ContainsKey(contentTypeKey))
+                {
+                    SelectedList.Items[contentTypeKey] = new List<MinecraftContent>();
+                }
+                SelectedList.Items[contentTypeKey].Add(item);
             }
         }
 
@@ -92,7 +99,7 @@ namespace Dravion.Components.Pages
             showItemListsDropdown = false; // Ocultar el dropdown después de seleccionar
         }
 
-        private int GetItemCount(ItemType type)
+        private int GetItemCount(ItemType type, bool isForSelectedItems = false)
         {
             if (SelectedList == null)
             {
@@ -106,10 +113,16 @@ namespace Dravion.Components.Pages
             return SelectedList.Items.ContainsKey(key) ? SelectedList.Items[key].Count : 0;
         }
 
-        private void SelectContentType(ItemType type)
+        private void SelectContentType(ItemType type, bool isForSelectedItems = false)
         {
-            // Cambia el tipo de contenido seleccionado
-            SelectedContentType = type;
+            if (isForSelectedItems)
+            {
+                SelectedContentTypeForSelectedItems = type;
+            }
+            else
+            {
+                SelectedContentType = type;
+            }
         }
 
         private void OnContentTypeChanged(ChangeEventArgs e)
@@ -120,5 +133,21 @@ namespace Dravion.Components.Pages
                 SelectedContentType = selectedType;
             }
         }
+
+        private List<ItemType> GetAvailableItemTypes()
+        {
+            // Obtener los tipos de items únicos de la lista AllItems
+            return HardcodedData.AllItems
+                .Select(item => item.Type)
+                .Distinct()
+                .ToList();
+        }
+
+        private string GetIconPath(ItemType itemType)
+        {
+            // Retorna la ruta del SVG basado en el nombre del tipo de item
+            return $"/images/{itemType.ToString().ToLower()}.svg";
+        }
+
     }
 }

@@ -96,33 +96,20 @@
         </div>
         <div class="sidebar-content">
             <div class="stats">
-                <button class="stat-item" data-type="mods" data-tooltip="Mods" @onclick="() => SelectContentType(ItemType.Mods)">
-                    <i data-lucide="box"></i>
-                    <span id="mods-count">@GetItemCount(ItemType.Mods)</span>
-                </button>
-                <button class="stat-item" data-type="plugins" data-tooltip="Plugins" @onclick="() => SelectContentType(ItemType.Plugins)">
-                    <i data-lucide="plug"></i>
-                    <span id="plugins-count">@GetItemCount(ItemType.Plugins)</span>
-                </button>
-                <button class="stat-item" data-type="shaders" data-tooltip="Shaders" @onclick="() => SelectContentType(ItemType.Shaders)">
-                    <i data-lucide="palette"></i>
-                    <span id="shaders-count">@GetItemCount(ItemType.Shaders)</span>
-                </button>
-                <button class="stat-item" data-type="resourcepacks" data-tooltip="Resource Packs" @onclick="() => SelectContentType(ItemType.ResourcePacks)">
-                    <i data-lucide="image"></i>
-                    <span id="resourcepacks-count">@GetItemCount(ItemType.ResourcePacks)</span>
-                </button>
-                <button class="stat-item" data-type="worlds" data-tooltip="Worlds" @onclick="() => SelectContentType(ItemType.Worlds)">
-                    <i data-lucide="globe"></i>
-                    <span id="worlds-count">@GetItemCount(ItemType.Worlds)</span>
-                </button>
+                @foreach (var itemType in GetAvailableItemTypes())
+                {
+                    <button class="stat-item" data-type="@itemType.ToString().ToLower()" data-tooltip="@itemType" @onclick="() => SelectContentType(itemType, true)">
+                        <img src="@GetIconPath(itemType)" style="width: 24px; height: 24px;" />
+                        <span id="@($"{itemType.ToString().ToLower()}-count")">@GetItemCount(itemType, true)</span>
+                    </button>
+                }
             </div>
             <div id="selected-items">
-                @if (SelectedList != null && SelectedList.Items.ContainsKey(SelectedContentType.ToString().ToLower()))
+                @if (SelectedList != null && SelectedList.Items.ContainsKey(SelectedContentTypeForSelectedItems.ToString().ToLower()))
                 {
-                    @if (SelectedList.Items[SelectedContentType.ToString().ToLower()].Any())
+                    @if (SelectedList.Items[SelectedContentTypeForSelectedItems.ToString().ToLower()].Any())
                     {
-                        @foreach (var item in SelectedList.Items[SelectedContentType.ToString().ToLower()])
+                        @foreach (var item in SelectedList.Items[SelectedContentTypeForSelectedItems.ToString().ToLower()])
                         {
                             <ItemCard Item="item"
                                       IsAdded="true"
